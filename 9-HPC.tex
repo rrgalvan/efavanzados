@@ -1,0 +1,195 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin={3cm,2cm}]{geometry}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{listings}
+% Code listing style
+% -----------------------------------
+\definecolor{codegreen}{rgb}{0.1,0.6,0.2}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.5,0,0.6}
+\definecolor{backcolour}{rgb}{0.94,0.94,0.95}
+\lstdefinestyle{mystyle}{
+    % backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize\ttfamily,
+    % basicstyle=\linespread{1.2}, % Line spacing
+    % breakatwhitespace=false,
+    % breaklines=true,
+    % numbers=left,
+    % numbersep=5pt,
+    aboveskip=1.0em,
+    belowskip=1.0em,
+}
+\lstset{style=mystyle}
+% -----------------------------------
+
+\title{Implementación en grandes ordenadores de métodos numéricos paralelos en espacio y tiempo}
+\date{\today}
+
+\newcommand{\nodoc}{No documentado}
+\newcommand{\libre}{\colorbox{YellowGreen}{Libre}}
+\newcommand{\gratis}{\colorbox{SeaGreen}{Gratuita}}
+
+\begin{document}
+\maketitle
+
+\section{El supercomputador de la UCA}
+\label{sec:supercomputador-UCA}
+La UCA dispone del superordenador \textit{CAI} (Cluster de Apoyo a la
+Investigación).  La forma de acceder al mismo, la política para lanzar
+trabajos y otras cuestiones básicas se resumen en
+\url{https://supercomputacion.uca.es/recursos/documentacion/preguntas-mas-frecuentes}
+
+Al acceder, el usuario está situado en el nodo de entrada, donde puede
+realizar pruebas, copiar ficheros, etc. y enviar programas para ser
+ejecutados en los nodos de cálculo.
+
+Se cuenta con una cantidad limitada de disco duro en la partición
+\texttt{/home} y más disco en la partición \texttt{/scratch\_local}
+(\url{https://supercomputacion.uca.es/limites/}).
+
+\subsection*{Hardware}
+El \textbf{hardware} se describe en
+\url{https://supercomputacion.uca.es/cluster-de-supercomputacion/hardware/},
+en la actualidad:
+\begin{itemize}
+\item 48 nodos, cada uno de los cuales dispone de 2 procesadores Intel Xeon E5 2670 a 2,6 GHz.
+\item Estos procesadores cuentan con 8 núcleos, por tanto cada nodo dispone $8\times 2=16$ núcleos
+\item En total, disponemos de $48\times 16=768$ núcleos de cálculo
+\end{itemize}
+
+\subsection*{Software}
+El \textbf{software} disponible se describe en \url{https://supercomputacion.uca.es/software/}
+\begin{itemize}
+\item Muchas de los paquetes de software disponibles sólo están
+  disponibles como \textbf{módulos}
+  \begin{itemize}
+  \item Deben cargarse antes de ser utilizados, usando
+    \texttt{module load}
+  \item Ejemplo:
+    \begin{lstlisting}[language=sh]
+      module load FEniCS
+    \end{lstlisting}
+  \item Pulsando \texttt{module load} \texttt{<tabulador>} aparecen
+    todos los módulos disponibles
+  \item \texttt{moudule list}: lista módulos cargados
+  \item Usar \texttt{module unload} para eliminar un módulo concreto
+
+  \item Más información: \texttt{module} \texttt{<tabulador>} o \texttt{man module}
+  \end{itemize}
+\end{itemize}
+
+\section{El sistema de colas \textit{slurm} para lanzar trabajos}
+\label{sec:supercomputador-UCA}
+Las tareas que envía cada usuario deben esperar, antes de su
+ejecución, a que el sistema le asigne los recursos necesarios (CPU,
+memoria, ...). El documento
+«\href{http://supercomputacion.uca.es/recursos/documentacion/politicas-de-gestion-de-colas}{Política
+  de Gestión de Colas}», resume la política de gestión de recursos que
+se utiliza para evitar que un usuario colapsase el supercomputador y
+que el uso de los recursos sea más equitativo entre todos los
+usuarios.
+
+El funcionamiento básico del sistema de colas
+\href{https://slurm.schedmd.com/quickstart.html}{slurm} se puede consultar en su
+web o en la página de documentación de supercomputación
+\url{https://supercomputacion.uca.es/recursos/documentacion}.
+
+Un resumen, extraído de su web:
+\begin{itemize}
+\item \texttt{sinfo}: reports the state of partitions and nodes
+  managed by Slurm.
+\item \texttt{squeue}: reports the state of jobs. By default, it
+  reports the running jobs in priority order and then the pending jobs
+  in priority order.
+\item \texttt{sbatch} is used to submit a job script for later
+  execution.
+\item \texttt{srun} is used to submit a job for execution or
+  initiate job steps in real time.
+\item \texttt{scancel} is used to cancel a pending or running job or
+  job step.
+\end{itemize}
+
+La orden usual para lanzar trabajos es \textbf{sbatch}. Se le debe
+pasar un \textit{script} de tipo \textit{shell} en el que se
+configuran los detalles del proceso que será ejecutado.
+\begin{itemize}
+\item El programa
+será cargado en el sistema de colas, en estado \textit{PENDING}.
+\item Cuando haya recursos disponibles, pasará a estado
+  \textit{RUNNING} y será ejecutado.
+\item Al finalizar, la salida se graba en un archivo (por defecto, en
+  el mismo directorio que el \textit{script}), así como la salida de
+  errores.
+\end{itemize}
+Para \textbf{generar el \textit{script}} para el sistema de colas, se aconseja:
+\begin{itemize}
+\item Utilizar el \textit{Generador de scripts} que está disponible en
+https://cai.uca.es/supercomputacion/usuario.php (enlace arriba a la izquierda)
+\item O bien utilizar un borrador previo, como el que aparece a continuación (tomado de \url{https://supercomputacion.uca.es/recursos/documentacion/preguntas-mas-frecuentes}.
+\end{itemize}
+
+\subsection*{Borrador para el sistema de colas \textit{slurm}}
+    \begin{lstlisting}[language=sh]
+#!/bin/bash
+#------- DIRECTIVAS SBATCH -------
+# Datos genericos aplicables a todos los trabajos:
+#SBATCH --partition=cn
+# - #SBATCH --exclusive
+#SBATCH --mail-user=SU.CORREO@uca.es
+#SBATCH --mail-type=BEGIN,END,FAIL,TIME_LIMIT_90
+#SBATCH --requeue
+#SBATCH --share
+# Esto para salidas no controladas:
+#SBATCH --error=/home/GRUPO/USUARIO/job.%J.err
+#SBATCH --output=/home/GRUPO/USUARIO/job.%J.out
+# - #SBATCH --workdir="/scratch/USUARIO"
+# - #SBATCH --workdir="/scratch_local/USUARIO"
+#SBATCH --workdir="/home/GRUPO/USUARIO"
+# Descripcion del trabajo:
+#SBATCH --job-name="TEST"
+#SBATCH --comment="Prueba de SBATCH"
+# *** MUY IMPORTANTE ***
+# Parametrizaci'on del trabajo
+# - #SBATCH --account=CUENTA
+#SBATCH --tasks=1
+# - #SBATCH --cpus-per-task=1
+# - #SBATCH --nodes=1
+# - #SBATCH --tasks-per-node=1
+#SBATCH --time=0-00:05:00
+#SBATCH --mem=1GB
+# - #SBATCH --gres=gpu:tesla:2
+#------- CONFIGURACION ENTORNO -------
+# Variables de ambiente exportadas para que est'en disponibles en
+# todos los procesos hijo
+export DATASOURCE=$SLURM_SUBMIT_DIR/input
+export DATAEND=$SLURM_SUBMIT_DIR/output
+export SCRATCH1=/scratch/$USER
+export SCRATCH2=/scratch_local/$USER
+# Carga de m'odulos
+#module load matlab
+# Configuraci'on del scratch
+mkdir -p $SCRATCH1
+#------- COPIA DE DATOS AL SCRATCH -------
+#sbcast --force --fanout=8 --size=100m $DATASOURCE/$SLURM_JOB_NAME.in
+$SCRATCH2/$SLURM_JOB_NAME.in
+#------- EJECUTAMOS EL PROGRAMA -------
+srun miprograma < $DATASOURCE/$SLURM_JOB_NAME.in > $SCRATCH1/$SLURM_JOB_NAME.out
+#srun miprograma < $SCRATCH2/$SLURM_JOB_NAME.in > $SCRATCH1/$SLURM_JOB_NAME.out
+RESULT=$?
+#------- SALVAMOS LOS RESULTADOS -------
+mv $SCRATCH1 $DATAEND/$SLURM_JOB_ID
+#------- ELIMINAMOS FICHEROS TEMPORALES -------
+rm -rf $SCRATCH1 $SCRATCH2
+#------- FIN -------
+exit $RESULT
+\end{lstlisting}
+\end{document}
