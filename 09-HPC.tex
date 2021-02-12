@@ -1,47 +1,7 @@
-\documentclass[11pt]{article}
 
-\usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
-\usepackage[margin={3cm,2cm}]{geometry}
-\usepackage{hyperref}
-\usepackage[dvipsnames]{xcolor}
+\section{Implementación en grandes ordenadores de métodos numéricos paralelos en espacio y tiempo}
 
-\usepackage{listings}
-% Code listing style
-% -----------------------------------
-\definecolor{codegreen}{rgb}{0.1,0.6,0.2}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.5,0,0.6}
-\definecolor{backcolour}{rgb}{0.94,0.94,0.95}
-\lstdefinestyle{mystyle}{
-    % backgroundcolor=\color{backcolour},
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\footnotesize\ttfamily,
-    % basicstyle=\linespread{1.2}, % Line spacing
-    % breakatwhitespace=false,
-    % breaklines=true,
-    % numbers=left,
-    % numbersep=5pt,
-    aboveskip=1.0em,
-    belowskip=1.0em,
-}
-\lstset{style=mystyle}
-% -----------------------------------
-
-\title{Implementación en grandes ordenadores de métodos numéricos paralelos en espacio y tiempo}
-\date{\today}
-
-\newcommand{\nodoc}{No documentado}
-\newcommand{\libre}{\colorbox{YellowGreen}{Libre}}
-\newcommand{\gratis}{\colorbox{SeaGreen}{Gratuita}}
-
-\begin{document}
-\maketitle
-
-\section{El supercomputador de la UCA}
+\subsection{El supercomputador de la UCA}
 \label{sec:supercomputador-UCA}
 La UCA dispone del superordenador \textit{CAI} (Cluster de Apoyo a la
 Investigación).  La forma de acceder al mismo, la política para lanzar
@@ -56,7 +16,11 @@ Se cuenta con una cantidad limitada de disco duro en la partición
 \texttt{/home} y más disco en la partición \texttt{/scratch\_local}
 (\url{https://supercomputacion.uca.es/limites/}).
 
-\subsection*{Hardware}
+\subsection{Implementación en grandes ordenadores de métodos numéricos paralelos en espacio y tiempo}
+
+\subsection{El superordenador de la UCA}
+
+\subsubsection*{Hardware}
 El \textbf{hardware} se describe en
 \url{https://supercomputacion.uca.es/cluster-de-supercomputacion/hardware/},
 en la actualidad:
@@ -66,7 +30,7 @@ en la actualidad:
 \item En total, disponemos de $48\times 16=768$ núcleos de cálculo
 \end{itemize}
 
-\subsection*{Software}
+\subsubsection*{Software}
 El \textbf{software} disponible se describe en \url{https://supercomputacion.uca.es/software/}
 \begin{itemize}
 \item Muchas de los paquetes de software disponibles sólo están
@@ -87,7 +51,7 @@ El \textbf{software} disponible se describe en \url{https://supercomputacion.uca
   \end{itemize}
 \end{itemize}
 
-\section{El sistema de colas \textit{slurm} para lanzar trabajos}
+\subsection{El sistema de colas \textit{slurm} para lanzar trabajos}
 \label{sec:supercomputador-UCA}
 Las tareas que envía cada usuario deben esperar, antes de su
 ejecución, a que el sistema le asigne los recursos necesarios (CPU,
@@ -137,7 +101,7 @@ https://cai.uca.es/supercomputacion/usuario.php (enlace arriba a la izquierda)
 \item O bien utilizar un borrador previo, como el que aparece a continuación (tomado de \url{https://supercomputacion.uca.es/recursos/documentacion/preguntas-mas-frecuentes}.
 \end{itemize}
 
-\subsection*{Borrador para el sistema de colas \textit{slurm}}
+\subsubsection*{Borrador para el sistema de colas \textit{slurm}}
     \begin{lstlisting}[language=sh]
 #!/bin/bash
 #------- DIRECTIVAS SBATCH -------
@@ -192,4 +156,8 @@ rm -rf $SCRATCH1 $SCRATCH2
 #------- FIN -------
 exit $RESULT
 \end{lstlisting}
-\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "efavanza.tex"
+%%% End:

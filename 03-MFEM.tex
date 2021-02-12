@@ -1,0 +1,163 @@
+\newcommand{\mfem}{\textit{MFEM}\xspace}
+\newcommand{\glvis}{\textit{GLVis}\xspace}
+
+\section{La biblioteca de elementos finitos \mfem. Problemas de evolución. Sistemas de EDP}
+\subsection{Instalación}
+\label{sec:03:instalacion}
+
+(Breve descripción de MFEM).
+\mfem y todas las herramientas que se describirán a continuación son código con licencia libre.
+
+Aunque, como se puede comprobar en la web
+\url{https://mfem.org/building/} existen versiones precompiladas que
+usan sistemas de paquetes como \textit{Spack}, optaremos por la
+instalación manual a partir de la compilación del código fuente.
+
+Esto será más complicado, pero una vez sepamos hacerlo tendremos una
+versión de la biblioteca expresamente compilada para nuestro sistema
+y, en el futuro, tendremos garantizado el disponer de la última
+versión, siempre que descarguemos las fuentes y volvamos a compilar.
+
+Para ello, empezamos por descargar y descomprimir en una carpeta de
+nuestro ordenador el archivo\footnote{Este tipo de archivos, de tipo
+  \textit{.tar} y comprimidos con \texttt{gzip}, se usan desde hace
+  décadas en sistemas UNIX.}  \texttt{.tgz} de su web,
+\url{https://mfem.org/}.
+\begin{itemize}
+\item Esta será la última versión ``estable'' disponible del \textbf{código fuente de MFEM}.
+\item De forma alternativa, se puede descargar la última versión ``inestable''de Github
+\end{itemize}
+
+
+A continuación, seguiremos las instrucciones del archivo
+\href{https://raw.githubusercontent.com/mfem/mfem/master/INSTALL}{\textit{INSTALL}},
+disponible en la web o en la carpeta donde descomprimimos anteriormente el código.
+
+Comenzaremos por compilar una \textbf{versión secuencial} de \mfem. Más
+adelante, hablaremos de la versión paralela. Los prerequisitos son:
+\begin{itemize}
+\item Un compilador de C++11, por ejemplo GCC.
+\item Se recomienda disponer de una instalación de la biblioteca
+  \textit{\glvis} para la visualización interactiva de mallas y
+  funciones definidas sobre ellas.
+\end{itemize}
+
+Para la compilación suponemos además que se dispone de
+\begin{itemize}
+\item \textit{Make}
+\item \textit{Cmake}
+\end{itemize}
+
+\begin{lstlisting}[language=sh]
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make -j 4
+\end{lstlisting}
+
+\begin{itemize}
+\item En lo anterior, \texttt{build} es el nombre del directorio que
+  elijamos para la compilación y \texttt{4} es el número de hilos
+  paralelos durante el proceso de compilación.
+
+\item \textit{CMake} es una
+  herramienta de generación de código. Se ocupa de estudiar la
+  disponibilidad en nuestro ordenador de las bibliotecas y otras
+  herramientas necesarias para la compilación y, con esta información,
+  genera un fichero \texttt{Makefile}.
+
+\item Este fichero contiene las órdenes efectivas para la compilación
+  y es utilizado (en la línea 4) por \textit{Make}, entorno de más
+  bajo nivel que \textit{CMake}, para realizar este proceso y generar
+  el código binario de \mfem.
+\end{itemize}
+
+Cuando finaliza la compilación, podemos ejecutar un primer test para
+ver que la \mfem funciona correctamente ejecutando:
+\begin{lstlisting}[language=sh]
+$ make check
+\end{lstlisting}
+Esta orden compila y ejecuta el ejemplo 1 de la documentación de \mfem
+(ver \url{https://mfem.org/examples}), que resuelve un problema para
+el operador Laplaciano con condiciones de contorno Dirichlet.
+\begin{lstlisting}
+$ make check
+[  0%] Built target copy_data
+[  0%] Built target exec_prerequisites
+[ 97%] Built target mfem
+[100%] Built target ex1
+Test project /home/rrgalvan/src/mfem/mfem-4.2/build
+    Start 4: ex1_ser
+1/1 Test #4: ex1_ser ..........................   Passed    0.15 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.15 sec
+[100%] Built target check
+\end{lstlisting}
+
+
+Cuando finaliza la compilación, tendremos en nuestro directorio el fichero binario que contiene la biblioteca \mfem (por ejemplo, en sistemas GNU/Linux, el fichero \verb|libmfem.a|.
+
+
+\subsection{El visualizador \glvis}
+\label{sec:glvis}
+
+Antes de su instalación, debemos asegurarnos de tener instalados los
+paquetes que \glvis necesita. Esto varía en función del sistema
+operativo (ver \url{https://glvis.org/building}).
+Por ejemplo, en sistemas GNU/Linux derivados de la distribución \textit{Debian}, como \textit{Ubuntu}:
+\begin{lstlisting}[language=sh]
+$ apt-get install libfontconfig1-dev libfreetype-dev libsdl2-dev libglew-dev libglm-dev libpng-dev
+\end{lstlisting}
+
+Una vez contamos con los paquetes necesarios, podemos compilar, por
+ejemplo usando directamente \textit{Make}. Será necesario indicar (en
+la variable \verb|MFEM_dir|), el directorio donde, previamente, hemos
+realizado la instalación de \mfem.
+\begin{lstlisting}[language=sh]
+$ make MFEM_DIR=../mfem-4.2/build -j 4
+\end{lstlisting}
+
+En este momento, podemos ejecutar \glvis, que queda a la espera de que
+\mfem (u otro programa) le envíe datos para ser visualizados:
+\begin{lstlisting}
+$ ./glvis
+
+       _/_/_/  _/      _/      _/  _/
+    _/        _/      _/      _/        _/_/_/
+   _/  _/_/  _/      _/      _/  _/  _/_/
+  _/    _/  _/        _/  _/    _/      _/_/
+   _/_/_/  _/_/_/_/    _/      _/  _/_/_/
+
+Waiting for data on port 19916 ...
+\end{lstlisting}
+% $
+
+Para hacer una prueba, abrimos otra terminal\footnote{O, en la misma
+  terminal, pasamos \glvis a modo \textit{background} (pulsamos
+  \texttt{Control+Z} y tecleamos \texttt{bg}).}. A continuación, nos
+situamos en la carpeta \texttt{build/examples} (asumiendo que
+\texttt{build} es el directorio de compilación de \mfem) y ejecutamos el ejemplo 1. Se obtendrá una representación gráfica similar a la mostrada en la figura
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.3\linewidth]{img/ex1-glvis}
+  \caption{Gráfica del ejemplo 1 de MFEM, visualizada con GLVis}
+  \label{fig:ex1-glvis}
+\end{figure}
+
+Podemos modificar la visualización utilizando el ratón o alguna de las
+combinaciones de tecla que se describen en el fichero
+\href{https://raw.githubusercontent.com/glvis/glvis/master/README}{\textit{README}}. Por
+ejemplo, podemos utilizar la tecla \texttt{m} para elegir la forma de
+visualización de la malla, \texttt{S} para guardar\footnote{El fichero
+  gráfico estará en el directorio desde donde se ejecutó el servidor
+  de \glvis y su nombre será del tipo \texttt{GLVis\_s01.png}} una
+captura de pantalla (\textit{snapshot}) y la tecla \texttt{q} para
+salir (\textit{quit)}.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "efavanza.tex"
+%%% End:
