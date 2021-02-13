@@ -77,9 +77,11 @@ ver que la \mfem funciona correctamente ejecutando:
 \begin{lstlisting}[language=sh]
 $ make check
 \end{lstlisting}
-Esta orden compila y ejecuta el ejemplo 1 de la documentación de \mfem
-(ver \url{https://mfem.org/examples}), que resuelve un problema para
-el operador Laplaciano con condiciones de contorno Dirichlet.
+Esta orden compila y ejecuta el
+\href{https://github.com/mfem/mfem/blob/master/examples/ex1.cpp}{ejemplo
+  1} de la documentación de \mfem (ver
+\url{https://mfem.org/examples}), que resuelve un problema para el
+operador Laplaciano con condiciones de contorno Dirichlet.
 \begin{lstlisting}
 $ make check
 [  0%] Built target copy_data
@@ -156,6 +158,49 @@ visualización de la malla, \texttt{S} para guardar\footnote{El fichero
   de \glvis y su nombre será del tipo \texttt{GLVis\_s01.png}} una
 captura de pantalla (\textit{snapshot}) y la tecla \texttt{q} para
 salir (\textit{quit)}.
+
+
+\subsection{Un primer ejemplo con \mfem}
+
+\mfem se ha diseñado como una biblioteca C++ cuya jerarquía de clases
+proporciona una serie de bloques básicos para desarrollar algoritmos
+de tipo elementos finitos. Estos bloques básicos se describen
+brevemente en \url{https://mfem.org/fem}. La jerarquía de clases se
+describe por completo en la página web de
+\href{https://mfem.github.io/doxygen/html/index.html}{documentación
+  del código C++}\footnote{Esta página es generada automáticamente a
+  partir de los comentarios incluidos en el código fuente, utilizando
+  \href{https://www.doxygen.nl/index.html}{Doxygen}, una excelente
+  herramienta para documentación en C++ (y otros lenguajes)} de \mfem.
+
+Para comenzar a familiarizarse con la biblioteca \mfem, es
+recomendable comenzar por el estudio de los ejemplos «canónicos»
+disponibles en \url{https://mfem.org/examples/} y en el subdirectorio
+\texttt{examples} del código fuente de \mfem.
+
+Estudiaremos a continuación el
+\href{https://github.com/mfem/mfem/blob/master/examples/ex1.cpp}{ejemplo
+  1}. Atendiendo a los comentarios insertados en el código fuente,
+este ejemplo se divide en los siguientes apartados:
+\begin{enumerate}
+\item Analizar las «opciones», parámetros que eventualmente son
+  recibidos desde la línea de comandos.
+\item Habilitar dispositivos de hardware, como GPU, y modelos de
+  programación, como CUDA u OpenMP.
+\item Leer de un archivo la malla (formada por triángulos,
+  cuadriláteros, hexaedros, ...).
+\item Refinar (uniformemente) la malla hasta la resolución deseada.
+\item Definir un espacio de elementos finitos.
+\item Determinar la lista de nodos a los que se asociarán condiciones
+  de contorno Dirichlet.
+\item Configurar la forma bilineal $b(\cdot)$ correspondiente al
+  segundo miembro de la formulación variacional.
+\item Definir una función de elementos finitos sobre la malla, $x$,
+  que recogerá la solución.
+\item Configurar la forma bilineal, $a(\cdot,\cdot)$, correspondiente
+  a la formulación variacional, en este caso para el operador laplaciano.
+\item Montar el sistema de ecuaciones lineales
+\end{enumerate}
 
 %%% Local Variables:
 %%% mode: latex
