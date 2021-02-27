@@ -5,14 +5,18 @@
 \subsection{Instalación}
 \label{sec:03:instalacion}
 
-(Breve descripción de MFEM).
-\mfem y todas las herramientas que se describirán a continuación son código con licencia libre.
+\mfem \url{https://mfem.org} es «una biblioteca C++ gratuita, liviana
+y escalable para métodos de elementos finitos».  Entre sus
+características, descritas en \url{https://mfem.org/features}:
+elementos 2D y 3D en triángulos, cuadriláteros, hexaedros, etc., orden
+alto, $H^1$--conformes o $L^2$--discontinuos, elementos isogeométricos
+(NURBS)...  Como todas las herramientas que se describirán a
+continuación \mfem tiene licencia libre.
 
 Aunque, como se puede comprobar en la web
 \url{https://mfem.org/building/} existen versiones precompiladas que
 usan sistemas de paquetes como \textit{Spack}, optaremos por la
 instalación manual a partir de la compilación del código fuente.
-
 Esto será más complicado, pero una vez sepamos hacerlo tendremos una
 versión de la biblioteca expresamente compilada para nuestro sistema
 y, en el futuro, tendremos garantizado el disponer de la última
@@ -45,7 +49,7 @@ adelante, hablaremos de la versión paralela. Los prerequisitos son:
 Para la compilación suponemos además que se dispone de
 \begin{itemize}
 \item \textit{Make}
-\item \textit{Cmake}
+\item \textit{CMake}
 \end{itemize}
 
 \begin{lstlisting}[language=sh]
@@ -161,6 +165,7 @@ salir (\textit{quit)}.
 
 
 \subsection{Un primer ejemplo con \mfem}
+\label{sec:3:un-primer-ejemplo}
 
 \mfem se ha diseñado como una biblioteca C++ cuya jerarquía de clases
 proporciona una serie de bloques básicos para desarrollar algoritmos
@@ -180,26 +185,34 @@ disponibles en \url{https://mfem.org/examples/} y en el subdirectorio
 
 Estudiaremos a continuación el
 \href{https://github.com/mfem/mfem/blob/master/examples/ex1.cpp}{ejemplo
-  1}. Atendiendo a los comentarios insertados en el código fuente,
-este ejemplo se divide en los siguientes apartados:
+  1} de la documentación. Atendiendo a los comentarios insertados en
+el código fuente, este ejemplo se divide en los siguientes apartados:
 \begin{enumerate}
-\item Analizar las «opciones», parámetros que eventualmente son
-  recibidos desde la línea de comandos.
-\item Habilitar dispositivos de hardware, como GPU, y modelos de
-  programación, como CUDA u OpenMP.
-\item Leer de un archivo la malla (formada por triángulos,
+\item Analizar las «opciones», parámetros que pueden ser
+  recibidos eventualmente desde la línea de comandos.
+\item Habilitar, optativamente, dispositivos de hardware, como GPU, y
+  modelos de programación, como CUDA u OpenMP.
+\item Leer de un archivo la \textbf{malla} (formada por triángulos,
   cuadriláteros, hexaedros, ...).
 \item Refinar (uniformemente) la malla hasta la resolución deseada.
-\item Definir un espacio de elementos finitos.
+\item Definir un \textbf{espacio de elementos finitos}.
 \item Determinar la lista de nodos a los que se asociarán condiciones
   de contorno Dirichlet.
-\item Configurar la forma bilineal $b(\cdot)$ correspondiente al
+\item Configurar la \textbf{forma lineal} $b(\cdot)$ correspondiente al
   segundo miembro de la formulación variacional.
-\item Definir una función de elementos finitos sobre la malla, $x$,
+\item Definir una \textbf{función de elementos finitos} sobre la malla, $x$,
   que recogerá la solución.
-\item Configurar la forma bilineal, $a(\cdot,\cdot)$, correspondiente
+\item Configurar la \textbf{forma bilineal}, $a(\cdot,\cdot)$, correspondiente
   a la formulación variacional, en este caso para el operador laplaciano.
-\item Montar el sistema de ecuaciones lineales
+\item \textbf{Montar el sistema de ecuaciones} lineales, añadiendo
+  transformaciones como eliminación de condiciones de contorno
+  esenciales (Dirichlet). Aquí (o previamente) se incluye el
+  ensamblado de las formas bilineal y lineal en matriz $A$ y vector $B$.
+\item \textbf{Resolver} el sistema de ecuaciones $A\, X= B$, obteniendo el vector $X$.
+\item \textbf{Reconstruir la solución como función} de elementos finitos sobre la malla (en la variable $x$).
+\item Grabar la malla y la solución para post-procesarla en el futuro.
+\item Enviar la solución a \glvis para su visualización.
+\item \textbf{Destruir} objetos para liberar memoria.
 \end{enumerate}
 
 %%% Local Variables:
