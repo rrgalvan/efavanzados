@@ -80,19 +80,34 @@ Python es un un lenguaje de programación\ldots{}
     \item Muy \emph{popular} entre los desarrolladores de software, en
       general. En la actualidad, ocupa la primera plaza en numerosas
       clasificaciones\footnote{Basta echar un vistazo a \href{https://www.google.com/search?channel=fs&client=ubuntu&q=lenguajes+de+ordenador+m\%C3\%A1s+usados}{Google: lenguajes de ordenador más usados}}.
-    \item Por último, pero : con \emph{licencia libre},
-  disponible en las arquitecturas habituales \emph{Windows},
+    \item Disponible, con licencia libre, en las arquitecturas habituales \emph{Windows},
   \emph{Mac}, \emph{Linux}.
 \end{itemize}
 
 Python abre un gran abanico de posibilidades para quienes estén
-interesados la informática, el cálculo numérico y científico. En este
+en el cálculo numérico y científico. En este
 curso se presuponen conocimientos mínimos en este lenguaje, así como
 en editores (como \textit{Atom}, \textit{Spider}, o \textit{Emacs}),
 entornos de desarrollo (como \textit{Jupyter}) y bibliotecas
 matemáticas (\textit{numpy}, \textit{matplotlib}...)
 especializados. De nuevo, existe una numerosa bibliografía y recursos
 disponibles en internet.
+
+
+\subsection{Introducción al entorno de elementos finitos FEniCS}
+\label{sec:FEniCS}
+La mejor descripción de \textit{FEniCS} la encontramos en su \href{https://fenicsproject.org/}{página web}:
+\begin{quote}
+  \it FEniCS is a popular open-source (LGPLv3) computing platform for solving partial differential equations (PDEs). FEniCS enables users to quickly translate scientific models into efficient finite element code. With the high-level Python and C++ interfaces to FEniCS, it is easy to get started, but FEniCS offers also powerful capabilities for more experienced programmers. FEniCS runs on a multitude of platforms ranging from laptops to high-performance clusters.
+\end{quote}
+
+En los últimos años, el
+\href{https://fenicsproject.org/download/}{proceso de instalación} se
+ha simplificado y gracias a ello FEniCS es hoy una de las principales
+referencias en la resolución numérica de EDP mediante el Método de los
+Elementos Finitos.
+
+\lstinputlisting[language=python]{src/FEM-primer-ejemplo.py}
 
 %%% Local Variables:
 %%% mode: latex
