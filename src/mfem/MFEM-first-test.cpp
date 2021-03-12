@@ -9,7 +9,7 @@ using namespace mfem;
 int main(int argc, char *argv[])
 {
    // 1. Parse command-line options.
-   const char *mesh_file = "../data/star.mesh";
+   const char *mesh_file = "./star.mesh";
    int order = 1;
    const char *device_config = "cpu";
    bool visualization = true;
@@ -109,10 +109,8 @@ int main(int argc, char *argv[])
 
    // 11. Solve the linear system A X = B.
    // If MFEM was compiled with SuiteSparse, use UMFPACK to solve the system.
-   UMFPackSolver umf_solver;
-   umf_solver.Control[UMFPACK_ORDERING] = UMFPACK_ORDERING_METIS;
-   umf_solver.SetOperator(*A);
-   umf_solver.Mult(B, X); // X=A^-1*B
+   GSSmoother M((SparseMatrix&)(*A));
+   PCG(*A, M, B, X, 1, 200, 1e-12, 0.0);
 
    // 12. Recover the solution as a finite element grid function.
    a.RecoverFEMSolution(X, b, x);
