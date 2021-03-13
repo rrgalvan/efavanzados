@@ -219,6 +219,43 @@ el código fuente, este ejemplo se divide en los siguientes apartados:
 \item \textbf{Destruir} objetos para liberar memoria.
 \end{enumerate}
 
+\subsection{Compilación de aplicaciones con \mfem}
+\label{sec:comp-de-aplic}
+
+Aunque ejecutar los ejemplos incluidos no es difícil, la creación de
+programas C++ independientes que utilicen la biblioteca \mfem no es
+sencilla. Ya que es necesario compilar y enlazar con esta biblioteca y
+con todas aquellas otras bibliotecas que \mfem utiliza (por ejemplo,
+para resolver sistemas de ecuaciones lineales).
+
+Una posibilidad es utilizar \textit{CMake}, que una herramienta
+precisamente diseñada para la generación automática de ficheros de
+compilación de proyectos (\textit{Makefile}). Aunque utilizar
+\textit{CMake} no es fácil, en los foros de
+\mfem\footnote{Específicamente en
+  \url{https://github.com/mfem/mfem/issues/1163}} se ha publicado un
+fichero \textit{CMakeLists.txt} que puede usarse como patrón para la
+generación de ficheros \textit{Makefile} que puedan ser utilizados
+para compilar programas de \mfem.
+
+Por ejemplo, para compilar el fichero C++ de la
+sección~\ref{sec:codigo-fuente-MFEM-sencillo}, que resuelve el
+problema $\Delta u=1$ con c.c. Dirichlet homogéneas, se puede utilizar
+el siguiente fichero \texttt{CMakeLists.txt}:
+\lstinputlisting[language=sh]{src/mfem/CMakeLists.txt}
+
+Para ello (asumiendo que el fichero de mallado está en la localización
+correcta), basta escribir en la \textit{shell}:
+\begin{lstlisting}
+  $ cmake .
+  $ make
+\end{lstlisting}
+Se generará un fichero \texttt{.gf} que se puede visualizar con
+\glvis, por ejemplo:
+\begin{lstlisting}
+  $ glvis -m star.mesh -s sol.gf
+\end{lstlisting} % $
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "efavanzados.tex"
