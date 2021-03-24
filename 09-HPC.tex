@@ -44,9 +44,12 @@ El \textbf{software} disponible se describe en \url{https://supercomputacion.uca
   \begin{itemize}
   \item Deben cargarse antes de ser utilizados, usando
     \texttt{module load}
-  \item Ejemplo:
+  \item Ejemplo (para usar FEniCS):
     \begin{lstlisting}[language=sh]
-      module load FEniCS
+      module load anaconda/3.7
+      conda activate fenicsproject # Entramos en el entorno fenicsproject en el que esta instalado FEniCS con Anaconda
+      python programa.py # Ejecutamos el programa que carga el modulo de FEniCS mediante ``import fenics''
+      conda deactivate # Ejecutamos esta orden para salir del entorno fenicsproject
     \end{lstlisting}
   \item Pulsando \texttt{module load} \texttt{<tabulador>} aparecen
     todos los módulos disponibles
