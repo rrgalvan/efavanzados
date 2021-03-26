@@ -166,6 +166,117 @@ rm -rf $SCRATCH1 $SCRATCH2
 exit $RESULT
 \end{lstlisting}
 
+\subsection*{Paralelización de programa FEniCS}
+
+Por defecto, si a un programa FEniCS (\textit{programa.py}) le indicamos lo siguiente, realizará paralelización del código entre los procesadores con memoria compartida:
+\begin{lstlisting}[language=python]
+	from dolfin import *
+	
+	parameters['linear_algebra_backend'] = 'PETSc'
+	parameters["mesh_partitioner"] = "ParMETIS" # "SCOTCH"
+	
+	...
+\end{lstlisting}
+
+
+Para paralelizar el programa FEniCS (\textit{programa.py}) en el cluster de supercomputación de la UCA con memoria distribuida (usando varios nodos de cálculo) podemos usar además el siguiente script donde NODOS es el número de nodos del cluster que queremos utilizar:
+\begin{lstlisting}[language=sh]
+	#!/bin/bash
+	
+	# Before conda activate, see https://fenicsproject.discourse.group/t/fenics-from-conda-doesnt-import/3502/6
+	CONDA_DIR=/apps/anaconda3-python3.7 # Ruta del directorio de Anaconda
+	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
+	conda activate fenicsproject
+	
+	time mpirun -n NODOS python programa.py # De esta forma ejecutamos tantos procesos como indiquemos con NODOS, hay que cambiar el numero de procesos y ajustarlo al numero de nodos del cluster que queramos usar
+\end{lstlisting}
+
+Ahora, ejecutamos el script anterior (\textit{script.sh}) con la siguiente orden:
+\begin{lstlisting}[language=sh]
+sbatch -N NODOS --ntasks-per-node 1 script.sh
+\end{lstlisting}
+
+\subsubsection*{Ejemplo con 1 nodo:}
+
+Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
+\begin{lstlisting}[language=sh]
+	#!/bin/bash
+	
+	# Before conda activate, see https://fenicsproject.discourse.group/t/fenics-from-conda-doesnt-import/3502/6
+	CONDA_DIR=/apps/anaconda3-python3.7 # Ruta del directorio de Anaconda
+	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
+	conda activate fenicsproject
+	
+	time mpirun -n 1 python diffusion-simple.py
+\end{lstlisting}
+
+Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
+\begin{lstlisting}[language=sh]
+	sbatch -N 1 --ntasks-per-node 1 diffus-sbatch.sh
+\end{lstlisting}
+
+\textit{Tiempo:} 0m25.700s.
+
+\subsubsection*{Ejemplo con 2 nodos:}
+Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
+\begin{lstlisting}[language=sh]
+	#!/bin/bash
+	
+	# Before conda activate, see https://fenicsproject.discourse.group/t/fenics-from-conda-doesnt-import/3502/6
+	CONDA_DIR=/apps/anaconda3-python3.7 # Ruta del directorio de Anaconda
+	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
+	conda activate fenicsproject
+	
+	time mpirun -n 2 python diffusion-simple.py
+\end{lstlisting}
+
+Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
+\begin{lstlisting}[language=sh]
+	sbatch -N 2 --ntasks-per-node 1 diffus-sbatch.sh
+\end{lstlisting}
+
+\textit{Tiempo:} 0m26.850s.
+
+\subsubsection*{Ejemplo con 4 nodos:}
+Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
+\begin{lstlisting}[language=sh]
+	#!/bin/bash
+	
+	# Before conda activate, see https://fenicsproject.discourse.group/t/fenics-from-conda-doesnt-import/3502/6
+	CONDA_DIR=/apps/anaconda3-python3.7 # Ruta del directorio de Anaconda
+	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
+	conda activate fenicsproject
+	
+	time mpirun -n 4 python diffusion-simple.py
+\end{lstlisting}
+
+Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
+\begin{lstlisting}[language=sh]
+	sbatch -N 4 --ntasks-per-node 1 diffus-sbatch.sh
+\end{lstlisting}
+
+\textit{Tiempo:} 0m21.582s.
+
+\subsubsection*{Ejemplo con 8 nodos:}
+Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
+\begin{lstlisting}[language=sh]
+	#!/bin/bash
+	
+	# Before conda activate, see https://fenicsproject.discourse.group/t/fenics-from-conda-doesnt-import/3502/6
+	CONDA_DIR=/apps/anaconda3-python3.7 # Ruta del directorio de Anaconda
+	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
+	conda activate fenicsproject
+	
+	time mpirun -n 8 python diffusion-simple.py
+\end{lstlisting}
+
+Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
+\begin{lstlisting}[language=sh]
+	sbatch -N 8 --ntasks-per-node 1 diffus-sbatch.sh
+\end{lstlisting}
+
+\textit{Tiempo:} 0m18.326s.
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "efavanzados.tex"
