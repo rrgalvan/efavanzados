@@ -168,7 +168,7 @@ exit $RESULT
 
 \subsection*{Paralelización de programa FEniCS}
 
-Por defecto, si a un programa FEniCS (\textit{programa.py}) le indicamos lo siguiente, realizará paralelización del código entre los procesadores con memoria compartida:
+Por defecto, si a un programa FEniCS (\textit{programa.py}) le indicamos lo siguiente, realizará paralelización del código entre los procesadores con memoria compartida\footnote{Esto puede que no sea necesario, FEniCS trabaja en paralelo con memoria compartida usando PETSc por defecto como backend.}:
 \begin{lstlisting}[language=python]
 	from dolfin import *
 	
