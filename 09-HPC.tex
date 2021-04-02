@@ -184,6 +184,9 @@ Para paralelizar el programa FEniCS (\textit{programa.py}) en el cluster de supe
 	#!/bin/bash
 	
 	# Before conda activate, see https://fenicsproject.discourse.group/t/fenics-from-conda-doesnt-import/3502/6
+	
+	# module load anaconda/3.7 # Podria ser necesario cargar el modulo si necesitamos actualizar las variables de tipo $PATH de nuestra shell con las que incorpora el modulo, por ejemplo, si hacemos una instalacion local de anaconda y queremos usar la instalacion sudo
+	
 	CONDA_DIR=/apps/anaconda3-python3.7 # Ruta del directorio de Anaconda
 	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
 	conda activate fenicsproject
