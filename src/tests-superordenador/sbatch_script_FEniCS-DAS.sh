@@ -1,7 +1,7 @@
-#!/bin/bash
+##!/bin/bash
 #SBATCH --job-name=diffusion-simple.py
 #SBATCH --partition=cn
-#SBATCH --nodes=16
+#SBATCH --nodes=10
 #SBATCH --ntasks-per-node=1
 #SBATCH --error=./out/job.%J.err
 #SBATCH --output=./out/job.%J.out
@@ -11,10 +11,10 @@
 
 #------------------------------------
 # Global variables
-export PROGRAM= diffusion-simple.py # Change this variable in #SBATCH --job-name too
-export MPI_PROCESSES=16 # Change this variable in #SBATCH --nodes too
+export PROGRAM=./diffusion-simple.py # Change this variable in #SBATCH --job-name too
+export MPI_PROCESSES=10 # Change this variable in #SBATCH --nodes too
 
-mkdir -p ./out # Change the output and error directory in #SBATCH --error and #SBATCH --output too
+# REMEMBER TO MAKE A DIRECTORY CALLED out INSIDE THE WORK DIRECTORY TO SAVE THE OUTPUTS
 
 #---------------------------------------------------------------------------
 # Environment configuration
