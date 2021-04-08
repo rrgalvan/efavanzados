@@ -1,4 +1,5 @@
 from dolfin import *
+import matplotlib.pylab as plt
 
 parameters['linear_algebra_backend'] = 'PETSc'
 parameters["mesh_partitioner"] = "ParMETIS" # "SCOTCH"
@@ -7,6 +8,26 @@ parameters["mesh_partitioner"] = "ParMETIS" # "SCOTCH"
 p = 1
 n = 64 # 1024 #640 #320 #64
 mesh = UnitSquareMesh(n, n)
+
+def refine_cell(cell):
+    p = cell.midpoint()
+    if p.distance(origin) < 0.1:
+        return True
+    else:
+        return False
+
+
+cell_markers = MeshFunction("bool", mesh, mesh.topology().dim())
+cell_markers.set_all(False)
+origin = Point([0.0, 0.0])
+for cell in cells(mesh):
+    cell_markers[cell] = refine_cell(cell)
+
+
+mesh = refine(mesh, cell_markers)
+plot(mesh)
+plt.show()
+
 Q = FunctionSpace(mesh, "CG", p)
 v = TestFunction(Q)
 u = TrialFunction(Q)
