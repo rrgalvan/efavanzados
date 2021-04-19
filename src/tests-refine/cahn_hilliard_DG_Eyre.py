@@ -28,6 +28,14 @@ import matplotlib.pyplot as plt
 E = []
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+def refine_cell(cell,phi_0,mean_value,d=0.2):
+    p = cell.midpoint()
+    if abs(phi_0(p)-mean_value) < d:
+        do_refine = True
+    else:
+        do_refine = False
+    return do_refine
+
 
 def CH_time_step(mesh, degree, t, dt, time_iter, phi_0):
 
@@ -49,15 +57,30 @@ def CH_time_step(mesh, degree, t, dt, time_iter, phi_0):
     REFINE_RATIO = 0.25
     LEVEL_MAX = 5
 
+    h_tol = 0.02
+    h_min = h_tol
+    level = 0
+
     #
     #  ADAPTIVE LOOP
     #
-    for level in range(LEVEL_MAX):
+    while level<=LEVEL_MAX and h_min>=h_tol:
+
+        if level>0:
+            cell_markers = MeshFunction("bool", mesh, mesh.topology().dim())
+            cell_markers.set_all(False)
+            for cell in cells(mesh):
+                cell_markers[cell] = refine_cell(cell,phi_0,mean_value=0.0,d=0.5)
+
+
+            mesh = refine(mesh, cell_markers)
+
+        h_min = mesh.hmin()
+        print(type(h_min))
+        print("h_min = %f (h_tol = %f)" %(h_min,h_tol))
 
         plot(mesh)
         plt.show()
-
-        print("h = %f" %(mesh.hmax()))
 
         P = FiniteElement("DG", mesh.ufl_cell(), degree) # Space of polynomials
         W = FunctionSpace(mesh, MixedElement([P,P])) # Space of functions
@@ -66,7 +89,13 @@ def CH_time_step(mesh, degree, t, dt, time_iter, phi_0):
         n = FacetNormal(mesh)
         h = CellDiameter(mesh)
 
-        phi_n = interpolate(phi_0, V)
+        phi_0 = interpolate(phi_0, V)
+
+        if time_iter==0 and level==0:
+            c = plot(phi_0)
+            plt.title("Condición inicial")
+            plt.colorbar(c)
+            plt.show()
 
         # Define variational problem
         u = TrialFunction(W) # Meaningless function used to define the variational formulation
@@ -80,7 +109,7 @@ def CH_time_step(mesh, degree, t, dt, time_iter, phi_0):
             - dot(avg(grad(w)),n('+'))*jump(barw) * dS \
             - dot(avg(grad(barw)),n('+'))*jump(w) * dS \
             + sigma/h('+') * dot(jump(w), jump(barw)) * dS)
-        L1 = phi_n * barw * dx
+        L1 = phi_0 * barw * dx
 
         a2 = w * barphi * dx \
             - pow(eps,2) * (dot(grad(phi),grad(barphi))*dx \
@@ -88,7 +117,7 @@ def CH_time_step(mesh, degree, t, dt, time_iter, phi_0):
             - dot(avg(grad(barphi)),n('+'))*jump(phi) * dS \
             + sigma/h('+') * dot(jump(phi), jump(barphi)) * dS) \
             - 2 * phi * barphi * dx
-        L2 = pow(phi_n,3) * barphi * dx - 3 * phi_n * barphi * dx
+        L2 = pow(phi_0,3) * barphi * dx - 3 * phi_0 * barphi * dx
 
         a = a1 + a2
         L = L1 + L2
@@ -100,23 +129,29 @@ def CH_time_step(mesh, degree, t, dt, time_iter, phi_0):
 
         phi, w = u.split(True)
 
+        level += 1
+
+        # if h_min<h_tol:
+        #     print("Se alcanzó la tolerancia")
+        #     break
+
     # Update previous solution
-    phi_n.assign(phi)
+    phi_0.assign(phi)
 
     # <<< End refinemnent loop
 
-    c = plot(phi_n)
-    plt.title("Condición inicial")
+    c = plot(phi_0)
+    plt.title("Solución en la etapa de refinado %d" % (level))
     plt.colorbar(c)
     plt.show()
 
-    print('max = %f' % (phi_n.vector().get_local().max()))
-    print('min = %f' % (phi_n.vector().get_local().min()))
-    print('mass = %f' % (assemble(phi_n*dx)))
+    print('max = %f' % (phi_0.vector().get_local().max()))
+    print('min = %f' % (phi_0.vector().get_local().min()))
+    print('mass = %f' % (assemble(phi_0*dx)))
 
 
     if time_iter == 0:
-        energy = assemble(0.5*pow(eps,2)*(dot(grad(phi_n),grad(phi_n))*dx - 2.0 * dot(avg(grad(phi_n)),n('+'))*jump(phi_n) * dS  + sigma/h('+') * pow(jump(phi_n),2) * dS) + 0.25 * pow(pow(phi_n,2)-1,2)*dx)
+        energy = assemble(0.5*pow(eps,2)*(dot(grad(phi_0),grad(phi_0))*dx - 2.0 * dot(avg(grad(phi_0)),n('+'))*jump(phi_0) * dS  + sigma/h('+') * pow(jump(phi_0),2) * dS) + 0.25 * pow(pow(phi_0,2)-1,2)*dx)
         E.append(energy)
         print('E =',energy)
 
@@ -136,38 +171,21 @@ def CH_time_step(mesh, degree, t, dt, time_iter, phi_0):
     # Compute the mass
     print('mass = %f' % (assemble(phi*dx)))
 
-pic = plot(phi)
-plt.title("Función de campo de fase en t = %.4f" %(t))
-plt.colorbar(pic)
-plt.show()
-
-
-plt.plot(np.linspace(0,T,num_steps+1),E, color='red')
-plt.title("Energía discreta")
-plt.xlabel("Tiempo")
-plt.ylabel("Energía")
-if(savepic):
-    plt.savefig("fig/DG-Eyre_nt-%d_energia.png" %(num_steps))
-plt.show()
-
+    # Return the solution
+    return phi
 
 # "Main function"
 
 if ( __name__ == '__main__' ):
 
     # Create mesh and define function space
-    nx = ny = 100 # Boundary points
+    nx = ny = 32 # Boundary points
     print("nx = ny = %d" %(nx))
     mesh = UnitSquareMesh(nx,ny)
 
     # Random initial data
     degree = 1
-    random.seed(1)
-    class Init_u(UserExpression):
-        def eval(self, values, x):
-            values[0] = random.uniform(-0.49,0.51)
-
-    phi_0 = Init_u(degree=degree) # Random values between -0.01 and 0.01
+    phi_0 = Expression("pow(x[0]-0.5,2) + pow(x[1]-0.5,2)<0.04? 1 : -1", degree=degree)
 
     T = 0.05            # final time
     num_steps = 100     # number of time steps
@@ -182,4 +200,12 @@ if ( __name__ == '__main__' ):
 
         # Update current time
         t += dt
-        CH_time_step(mesh, degree, t, dt, phi_0)
+        phi_0 = CH_time_step(mesh, degree, t, dt, i, phi_0)
+
+    plt.plot(np.linspace(0,T,num_steps+1),E, color='red')
+    plt.title("Energía discreta")
+    plt.xlabel("Tiempo")
+    plt.ylabel("Energía")
+    if(savepic):
+        plt.savefig("fig/DG-Eyre_nt-%d_energia.png" %(num_steps))
+    plt.show()
