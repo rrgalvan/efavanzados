@@ -196,7 +196,7 @@ Para paralelizar el programa FEniCS (\textit{programa.py}) en el cluster de supe
 
 Ahora, ejecutamos el script anterior (\textit{script.sh}) con la siguiente orden:
 \begin{lstlisting}[language=sh]
-sbatch -N NODOS --ntasks-per-node 1 script.sh
+sbatch -n NODOS --ntasks-per-node 1 script.sh
 \end{lstlisting}
 
 \subsubsection*{Ejemplo con 1 nodo:}
@@ -215,7 +215,7 @@ Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
 
 Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
 \begin{lstlisting}[language=sh]
-	sbatch -N 1 --ntasks-per-node 1 diffus-sbatch.sh
+	sbatch -n 1 --ntasks-per-node 1 diffus-sbatch.sh
 \end{lstlisting}
 
 \textit{Tiempo:} 0m25.700s.
@@ -235,7 +235,7 @@ Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
 
 Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
 \begin{lstlisting}[language=sh]
-	sbatch -N 2 --ntasks-per-node 1 diffus-sbatch.sh
+	sbatch -n 2 --ntasks-per-node 1 diffus-sbatch.sh
 \end{lstlisting}
 
 \textit{Tiempo:} 0m26.850s.
@@ -255,7 +255,7 @@ Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
 
 Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
 \begin{lstlisting}[language=sh]
-	sbatch -N 4 --ntasks-per-node 1 diffus-sbatch.sh
+	sbatch -n 4 --ntasks-per-node 1 diffus-sbatch.sh
 \end{lstlisting}
 
 \textit{Tiempo:} 0m21.582s.
@@ -275,7 +275,7 @@ Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
 
 Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
 \begin{lstlisting}[language=sh]
-	sbatch -N 8 --ntasks-per-node 1 diffus-sbatch.sh
+	sbatch -n 8 --ntasks-per-node 1 diffus-sbatch.sh
 \end{lstlisting}
 
 \textit{Tiempo:} 0m18.326s.
