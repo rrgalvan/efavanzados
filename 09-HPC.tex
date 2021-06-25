@@ -191,13 +191,14 @@ Para paralelizar el programa FEniCS (\textit{programa.py}) en el cluster de supe
 	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
 	conda activate fenicsproject
 	
-	time mpirun -n NODOS python programa.py # De esta forma ejecutamos tantos procesos como indiquemos con NODOS, hay que cambiar el numero de procesos y ajustarlo al numero de nodos del cluster que queramos usar
+	time mpirun -n NODOS python programa.py # De esta forma ejecutamos tantos procesos como indiquemos con NODOS, hay que cambiar el numero de procesos y ajustarlo al numero de nodos del cluster que queramos usar.
 \end{lstlisting}
 
 Ahora, ejecutamos el script anterior (\textit{script.sh}) con la siguiente orden:
 \begin{lstlisting}[language=sh]
-sbatch -n NODOS --ntasks-per-node 1 script.sh
+sbatch -n NODOS script.sh
 \end{lstlisting}
+Si usamos el sistema de colas \texttt{slurm}, no hace falta indicar el numero de tareas en \texttt{mpirun}, sino simplemente a \texttt{sbatch}.
 
 \subsubsection*{Ejemplo con 1 nodo:}
 
@@ -210,12 +211,12 @@ Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
 	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
 	conda activate fenicsproject
 	
-	time mpirun -n 1 python diffusion-simple.py
+	time mpirun python diffusion-simple.py
 \end{lstlisting}
 
 Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
 \begin{lstlisting}[language=sh]
-	sbatch -n 1 --ntasks-per-node 1 diffus-sbatch.sh
+	sbatch -n 1 diffus-sbatch.sh
 \end{lstlisting}
 
 \textit{Tiempo:} 0m25.700s.
@@ -230,12 +231,12 @@ Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
 	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
 	conda activate fenicsproject
 	
-	time mpirun -n 2 python diffusion-simple.py
+	time mpirun python diffusion-simple.py
 \end{lstlisting}
 
 Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
 \begin{lstlisting}[language=sh]
-	sbatch -n 2 --ntasks-per-node 1 diffus-sbatch.sh
+	sbatch -n 2 diffus-sbatch.sh
 \end{lstlisting}
 
 \textit{Tiempo:} 0m26.850s.
@@ -250,7 +251,7 @@ Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
 	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
 	conda activate fenicsproject
 	
-	time mpirun -n 4 python diffusion-simple.py
+	time mpirun python diffusion-simple.py
 \end{lstlisting}
 
 Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
@@ -270,7 +271,7 @@ Creamos el script para ejecutar el programa \textit{diffusion-simple.py}.
 	source $CONDA_DIR/etc/profile.d/conda.sh # Ruta del script de Anaconda
 	conda activate fenicsproject
 	
-	time mpirun -n 8 python diffusion-simple.py
+	time mpirun python diffusion-simple.py
 \end{lstlisting}
 
 Ahora, ejecutamos el script anterior (\textit{diffus-sbatch.sh}) con la siguiente orden:
@@ -285,15 +286,14 @@ Para ejecutar FEniCS en el superordenador cai3 y que nos avise por correo de cua
 \begin{itemize}
 	\item Tenemos que crear un directorio llamado \textbf{out} dentro del directorio de trabajo.
 	\item Si modificamos el nombre del programa en la variable \textbf{PROGRAM}, debemos cambiarlo también en \textbf{SBATCH --job-name} e indicar el \textbf{mismo nombre}.
-	\item Si modificamos la variable \textbf{MPI\_PROCESSES} para cambiar el número de nodos en el que se ejecuta nuestro programa con memoria dsitribuida, debemos modificarla también en \textbf{SBATCH --nodes} e indicar el \textbf{mismo número}.
+	\item En el parámetro \textbf{SBATCH --nodes} indicamos el número de nodos en el que se ejecuta nuestro programa con memoria dsitribuida. La orden \texttt{mpirun} reconoce los nodos que le pedimos a \texttt{slurm}.
 \end{itemize}
 
 \begin{lstlisting}[language=sh]
 	#!/bin/bash
 	#SBATCH --job-name=diffusion-simple.py
 	#SBATCH --partition=cn
-	#SBATCH --nodes=10
-	#SBATCH --ntasks-per-node=1
+	#SBATCH --ntasks=10
 	#SBATCH --error=./out/job.%J.err
 	#SBATCH --output=./out/job.%J.out
 	#SBATCH --mail-user=daniel.acosta@uca.es
@@ -303,7 +303,6 @@ Para ejecutar FEniCS en el superordenador cai3 y que nos avise por correo de cua
 	#------------------------------------
 	# Global variables
 	export PROGRAM=./diffusion-simple.py # Change this variable in #SBATCH --job-name too
-	export MPI_PROCESSES=10 # Change this variable in #SBATCH --nodes too
 	
 	# REMEMBER TO MAKE A DIRECTORY CALLED out INSIDE THE WORK DIRECTORY TO SAVE THE OUTPUTS
 	
@@ -324,7 +323,7 @@ Para ejecutar FEniCS en el superordenador cai3 y que nos avise por correo de cua
 	
 	#------------------------------------------------------------------
 	# Run pogram
-	time mpirun -n $MPI_PROCESSES $PYTHON $WORKDIR/$PROGRAM
+	time mpirun $PYTHON $WORKDIR/$PROGRAM
 	RESULT=$?
 	
 	#------------------------------------------------------------------
