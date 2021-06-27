@@ -294,6 +294,7 @@ Para ejecutar FEniCS en el superordenador cai3 y que nos avise por correo de cua
 	#SBATCH --job-name=diffusion-simple.py
 	#SBATCH --partition=cn
 	#SBATCH --ntasks=10
+	#SBATCH --time=10-00:00:00
 	#SBATCH --error=./out/job.%J.err
 	#SBATCH --output=./out/job.%J.out
 	#SBATCH --mail-user=daniel.acosta@uca.es
