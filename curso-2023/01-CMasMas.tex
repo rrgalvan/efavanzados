@@ -1,0 +1,178 @@
+
+%==================================================
+\section{El lenguaje C++ en entornos Unix}
+%==================================================
+
+\begin{contenidos}
+  Introducción a la «shell» en entornos Unix. Sistemas
+  de control de versiones. Lenguajes de programación
+  Python y Julia. El lenguaje de programación C++ 
+\end{contenidos}
+
+
+\subsection{Introducción a la «shell» en entornos Unix}
+\label{sec:intr-la-shell}
+
+El objetivo de esta sección es familiarizarse con: algunos de los
+conceptos básicos de la \textit{shell} UNIX, que serán útiles para el
+resto de los temas. En concreto:
+\begin{itemize}
+\item Órdenes básicas de la \textit{shell}
+\item Introducción a la programación de \textit{scripts}
+\end{itemize}
+
+Nos centramos en la \textit{shell Bash}, la más extendida\footnote{Por
+  supuesto existen muchas otras \textit{shells} UNIX, entre ellas
+  destacamos a \href{https://www.zsh.org/}{Zsh}} en entornos
+UNIX. Como punto de partida, se puede utilizar alguna de las numerosas
+guías o «reference cards» disponibles en internet, por ejemplo:
+\begin{itemize}
+\item \href{https://www.cs.jhu.edu/~joanne/unixRC.pdf}{UNIX (shell) reference card}
+\item \href{http://web.mit.edu/merolish/Public/vi-ref.pdf}{Vi refference card}
+\item \href{https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf}{Emacs refference card}
+\end{itemize}
+
+Las dos últimas referencias se centran en los editores \textit{VI} y
+\textit{Emacs}, disponibles en terminales UNIX y también en entornos
+gráficos de ventanas, con menús, botones etc (especialmente,
+\textit{Emacs}). \textit{VI}\footnote{Un libro en PDF que puede ser un
+  buen punto de partida sobre VI:
+  \url{https://github.com/manish-old/ebooks/blob/master/OReilly.Learning.the.vi.and.Vim.Editors.7th.Edition.Jul.2008.pdf}}
+(o \textit{VIM}, una versión «mejorada») es especialmente ubicuo en
+sistemas UNIX.
+
+En la literatura existe bastante documentación sobre el manejo de la
+\textit{shell}, abarcando desde el manejo básico de la consola hasta
+la programación de \textit{scripts}. Aquí citamos por ejemplo dos
+libros~\cite{Newham-bash,Albing-Vosen-Bash}  de la editorial O'Reilly\footnote{Esta editorial publica muchos libros con una licencia que permite disponer del PDF, ver \url{https://www.oreilly.com/openbook}.}
+que, en versión PDF, están disponibles en internet%
+\footnote{Los libros se pueden descargar en formato PDF,
+  respectivamente, de:
+  \begin{itemize}
+  \item \url{https://doc.lagout.org/operating\%20system\%20/linux/Learning\%20the\%20bash\%20Shell\%20-\%20Unix\%20Shell\%20Programming.pdf}
+  \item \url{http://index-of.es/Programming/Bash/O\%27Reilly\%20bash\%20CookBook.pdf}
+  \end{itemize}
+  }.
+
+\subsection{Sistemas de control de versiones}
+Los sistemas de control de versiones permiten gestionar los cambios que se realizan en ficheros (usualmente, código fuente de programas, documentos \LaTeX, etc.). Este tipo de sistemas está diseñado para almacenar los ficheros, mantener un histórico de las acciones realizadas sobre ellos y facilitar la colaboración de distintas personas en su edición. En la actualidad, el más utilizado es el sistema de control de versiones \href{https://git-scm.com/}{Git}. Los ficheros y los cambios realizados se pueden almacenar en distintos \textit{repositorios}, locales o remotos. Existen algunos sitios web para almacenar repositorios remotos, públicos o privados: \href{https://github.com}{Github}, \href{https://gitlab.com/}{Gitlab}, \href{https://bitbucket.org}{Bitbucket}...
+
+Como introducción y punto de entrada a Git se recomienda seguir alguno de los tutoriales disponibles en internet, por ejemplo \url{https://swcarpentry.github.io/git-novice/}. De nuevo, entre la abundante literatura sobre el tema, destacamos aquí una referencia de la que podemos descargar una versión en formato PDF\footnote{\url{https://gitlab.atica.um.es/palazon.um.es/gitParaTodos/blob/50ade3c49f78bd372e0237530c9abf27afb5dd0d/bib/O\%27Reilly\%20Git\%20Pocket\%20Guide\%202013.pdf}}.
+
+\subsection{Lenguaje de programación Python}
+\label{sec:python}
+
+
+Python es un un lenguaje de programación\ldots{}
+\begin{itemize}
+\item De alto nivel\footnote{``Cercano al lenguaje
+    natural'' (en este caso, al inglés), a diferencia de
+    ``lenguajes máquina''.}.
+\item De propósito general\footnote{En el sentido de estar orientado a
+    su uso para numerosos fines: desde programación de aplicaciones para
+    sistemas operativos hasta, juegos, proceso de audio, cálculo
+    científico, móviles\ldots{}}.
+\item Interpretado\footnote{Es decir, existe un programa (el
+    \emph{intérprete}) que lee y ejecuta los programas sin necesidad
+    de un proceso previo de compilación.}. Como tal, tiene sus ventajas
+  (se agiliza el ciclo de desarrollo de software) e inconvenientes
+  (menos rápido que los lenguajes compilados).
+\item Orientado al \emph{desarrollo rápido} y a la legibilidad de los programas.
+\item Cuenta con extensiones (bibliotecas) que lo convierten en una
+      potente herramienta en el \emph{cálculo numérico} y científico.
+    \item Muy \emph{popular} entre los desarrolladores de software, en
+      general. En la actualidad, ocupa la primera plaza en numerosas
+      clasificaciones\footnote{Basta echar un vistazo a \href{https://www.google.com/search?channel=fs&client=ubuntu&q=lenguajes+de+ordenador+m\%C3\%A1s+usados}{Google: lenguajes de ordenador más usados}}.
+    \item Disponible, con licencia libre, en las arquitecturas habituales \emph{Windows},
+  \emph{Mac}, \emph{Linux}.
+\end{itemize}
+
+Python abre un gran abanico de posibilidades para quienes estén
+en el cálculo numérico y científico. En este
+curso se presuponen conocimientos mínimos en este lenguaje, así como
+en editores (como \textit{Atom}, \textit{Spider}, o \textit{Emacs}),
+entornos de desarrollo (como \textit{Jupyter}) y bibliotecas
+matemáticas (\textit{numpy}, \textit{matplotlib}...)
+especializados. De nuevo, existe una numerosa bibliografía y recursos
+disponibles en internet.
+
+\subsection{El lenguaje de programación Julia}
+\label{sec:01:Julia}
+
+TODO
+
+
+\subsection{El lenguaje de programación C++}
+\label{sec:el-lenguaje-c++}
+
+Según \href{https://es.wikipedia.org/wiki/C\%2B\%2B}{Wikipedia}:
+\begin{quote}\it
+  C++ es un lenguaje de programación diseñado en 1979 por Bjarne Stroustrup. La intención de su creación fue extender al lenguaje de programación C mecanismos que permiten la manipulación de objetos. En ese sentido, desde el punto de vista de los lenguajes orientados a objetos, C++ es un lenguaje híbrido.
+
+Posteriormente se añadieron facilidades de programación genérica, que se sumaron a los paradigmas de programación estructurada y programación orientada a objetos. Por esto se suele decir que el C++ es un lenguaje de programación multiparadigma.
+
+Actualmente existe un estándar, denominado ISO C++, al que se han adherido la mayoría de los fabricantes de compiladores más modernos.
+\end{quote}
+
+El estándar ISO C++ ha evolucionado con los años y, a pesar de que se trató de no hacer cambios importantes en el núcleo del lenguaje, la versión publicada en el año 2011 marcó diferencias entre las versiones anteriores ``clásicas'' y versiones de C++ ``modernas''. De nuevo de Wikipedia:
+
+\begin{quote}\it
+  Entre las características del nuevo estándar [C++11] se pueden destacar:
+  \begin{itemize}
+  \item Funciones lambda;
+  \item Referencias rvalue;
+  \item La palabra reservada auto;
+  \item Inicialización uniforme;
+  \item Plantillas con número variable de argumentos.
+  \end{itemize}
+  Además se ha actualizado la biblioteca estándar del lenguaje.
+\end{quote}
+Para introducirse en el lenguaje se suele considerar buena costumbre comenzar estudiando C++ ``clásico'' para a continuación sumergirse en los cambios que introdujo C++11 (y versiones posteriores: C++14, C++17,...).
+
+\paragraph{Instalar compiladores y bibliotecas C/C++}
+\begin{itemize}
+  \item Compiladores recomendados (con licencia libre): \texttt{gcc},  \texttt{clang}
+  \item Instalación en entornos \textbf{GNU/Linux}: usar \texttt{apt} (u otro sistema de paquetes)
+  \item Instalación en entornos \textbf{Mac}: 
+    \begin{itemize}
+      \item Para instalar solamente los compiladores y bibliotecas básicas, ejecutar en una terminal la orden: 
+        \texttt{xcode-select --install}
+      \item Otra posibilidad es instalar atodo el entorno \textit{Xcode} desde la tienda de software
+    \end{itemize}
+  \item Otros editores/entornos de desarrollo recomendados: \textit{VScode}, \textit{Vim/Neovim} 
+\end{itemize}
+\paragraph{Algunos libros/bibliografía sobre C++ ``clásico''}
+\begin{enumerate}
+
+  \item \href{http://www-apr.lip6.fr/~tierny/stuff/teaching/tierny_visualization_introductionC++.pdf}{J. Tierny -- A Quick Introduction to C++ Programming}. Introducción breve (26 páginas en PDF). Se incluyen ficheros \textit{CMake} para la compilación de los ejemplos.
+  \item \href{https://homes.cs.washington.edu/~tom/c++example/}{Thomas Anderson -- A Quick Introduction to C++}. Introducción rápida. En la web se incluye el código fuente de los ejemplos. Pero un poco anticuada, al menos la sección ``5 Features To Avoid Like the Plague'' es polémica (¿evitar la biblioteca estándar? ¿la clase \texttt{vector}?.
+  \item Bruce Eckel, Chuck Allison -- Thinking C++, \href{http://vergil.chemistry.gatech.edu/resources/programming/pdf/TIC2Vone.pdf}{volumen 1} y \href{https://www.cs.rit.edu/~cs4/Thinking-in-C++2nd-ed-Volume-2.pdf}{volumen 2}.
+\item \href{https://github.com/manish-old/ebooks-2/blob/master/O'Reilly\%20-\%20Practical\%20C\%2B\%2B\%20Programming.pdf}
+{Libro ed. O'Reilly -- Practical C++ Programming}
+\end{enumerate}
+
+\paragraph{Algunos libros/bibliografía sobre C++ ``moderno''}
+\begin{enumerate}
+\item \href{https://consense.com.ua/en/lib/book/cpp_modern_cpp_progr_cookbook}{Marius Bancila.
+"Modern C++ Programming Cookbook"}
+\item \href{https://changkun.de/modern-cpp/pdf/modern-cpp-tutorial-en-us.pdf}{Changkun Ou. ``Modern C++ Tutorial: C++11/14/17/20 On the Fly''}
+
+\end{enumerate}
+
+
+\subsection{Algunas líneas interesantes en las que profundizar}
+\label{sec:01:profundizar}
+
+
+\begin{itemize}
+  \item Algunos tests de velociad: Python vs Julia vs C++
+  \item ¿Cómo ejecutar software C/C++ desde Python? ¿Y desde Julia?
+  \item \href{http://hplgit.github.io/fenics-mixed/doc/pub/fenics-mixed.html}{¿Cómo combinar FEniCS con otro software? (Fortran, Octave/Matlab...)}
+\end{itemize}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "menuavedp.tex"
+%%% End:

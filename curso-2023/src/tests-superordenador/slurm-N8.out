@@ -1,0 +1,22 @@
+# sbatch -N 8 --ntasks-per-node 1 diffus-sbatch.sh 
+
+Process 0: Solving linear variational problem.
+Process 3: Solving linear variational problem.
+Process 1: Solving linear variational problem.
+Process 2: Solving linear variational problem.
+Process 5: Solving linear variational problem.
+Process 7: Solving linear variational problem.
+Process 6: Solving linear variational problem.
+Process 4: Solving linear variational problem.
+Vale
+Vale
+Vale
+Vale
+Vale
+Vale
+Vale
+Vale
+
+real	0m18.326s
+user	0m0.028s
+sys	0m0.057s

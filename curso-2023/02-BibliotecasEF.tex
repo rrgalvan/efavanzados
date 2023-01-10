@@ -1,0 +1,51 @@
+%==================================================
+\section{Bibliotecas de Elementos Finitos}
+%==================================================
+
+\begin{contenidos}
+Implemenación de Bibliotecas de elementos finitos.
+La biblioteca Julia Gridap. La biblioteca Python/C++ FEniCS.
+\end{contenidos}
+
+
+\subsection{Introducción al entorno de elementos finitos FEniCS}
+%---------------------------------------------------------------
+
+\label{sec:FEniCS}
+La mejor descripción de \textit{FEniCS} la encontramos en su \href{https://fenicsproject.org/}{página web}:
+\begin{quote}
+  \it FEniCS is a popular open-source (LGPLv3) computing platform for solving partial differential equations (PDEs). FEniCS enables users to quickly translate scientific models into efficient finite element code. With the high-level Python and C++ interfaces to FEniCS, it is easy to get started, but FEniCS offers also powerful capabilities for more experienced programmers. FEniCS runs on a multitude of platforms ranging from laptops to high-performance clusters.
+\end{quote}
+
+En los últimos años, el
+\href{https://fenicsproject.org/download/}{proceso de instalación} se
+ha simplificado y gracias a ello FEniCS es hoy una de las principales
+referencias en la resolución numérica de EDP mediante el Método de los
+Elementos Finitos.
+
+Como documentación, es interesante destacar
+\href{https://fenicsproject.org/book/}{The FEniCS Book}, un libro de
+más de 700 pátinas que incluye ejemplos avanzados y aplicaciones en
+numerosos campos (fluidos, elasticidad, biología...) que se puede
+descargar en formato PDF.
+
+\lstinputlisting[language=python]{src/FEniCS-first-example.py}
+
+\subsection{Algunas líneas interesantes en las que profundizar}
+\label{sec:01:profundizar}
+
+\begin{itemize}
+\item ¿Cómo funciona la interfaz C++ de \textit{FEniCS}? ¿Es más rápida que la interfaz Python? \url{https://fenicsproject.org/pub/course/lectures/2017-nordic-phdcourse/lecture_18_cpp_fenics.pdf}
+
+\item Para compilar en C++, es conveniente tener nociones de las herramientas \textit{GNU Make} y \textit{CMake}.
+  \begin{itemize}
+  \item \url{https://rodin.uca.es/xmlui/handle/10498/13276}
+  \item \url{https://cmake.org/cmake/help/v3.20/guide/tutorial/index.html}
+  \end{itemize}
+\end{itemize}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "menuavedp.tex"
+%%% End:

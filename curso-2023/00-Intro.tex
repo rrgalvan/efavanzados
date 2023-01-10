@@ -1,0 +1,103 @@
+
+%==================================================
+\section{Introducción}
+%==================================================
+
+\begin{contenidos}
+  Introducción a la «shell» en entornos Unix. Sistemas
+  de control de versiones. Lenguaje de programación
+  Python. Introducción al entorno de elementos finitos
+  FEniCS.
+\end{contenidos}
+
+\subsection{Introducción a la «shell» en entornos Unix}
+\label{sec:intr-la-shell}
+
+El objetivo de esta sección es familiarizarse con: algunos de los
+conceptos básicos de la \textit{shell} UNIX, que serán útiles para el
+resto de los temas. En concreto:
+\begin{itemize}
+\item Órdenes básicas de la \textit{shell}
+\item Introducción a la programación de \textit{scripts}
+\end{itemize}
+
+Nos centramos en la \textit{shell Bash}, la más extendida\footnote{Por
+  supuesto existen muchas otras \textit{shells} UNIX, entre ellas
+  destacamos a \href{https://www.zsh.org/}{Zsh}} en entornos
+UNIX. Como punto de partida, se puede utilizar alguna de las numerosas
+guías o «reference cards» disponibles en internet, por ejemplo:
+\begin{itemize}
+\item \href{https://www.cs.jhu.edu/~joanne/unixRC.pdf}{UNIX (shell) reference card}
+\item \href{http://web.mit.edu/merolish/Public/vi-ref.pdf}{Vi refference card}
+\item \href{https://www.gnu.org/software/emacs/refcards/pdf/refcard.pdf}{Emacs refference card}
+\end{itemize}
+
+Las dos últimas referencias se centran en los editores \textit{VI} y
+\textit{Emacs}, disponibles en terminales UNIX y también en entornos
+gráficos de ventanas, con menús, botones etc (especialmente,
+\textit{Emacs}). \textit{VI}\footnote{Un libro en PDF que puede ser un
+  buen punto de partida sobre VI:
+  \url{https://github.com/manish-old/ebooks/blob/master/OReilly.Learning.the.vi.and.Vim.Editors.7th.Edition.Jul.2008.pdf}}
+(o \textit{VIM}, una versión «mejorada») es especialmente ubicuo en
+sistemas UNIX.
+
+En la literatura existe bastante documentación sobre el manejo de la
+\textit{shell}, abarcando desde el manejo básico de la consola hasta
+la programación de \textit{scripts}. Aquí citamos por ejemplo dos
+libros~\cite{Newham-bash,Albing-Vosen-Bash}  de la editorial O'Reilly\footnote{Esta editorial publica muchos libros con una licencia que permite disponer del PDF, ver \url{https://www.oreilly.com/openbook}.}
+que, en versión PDF, están disponibles en internet%
+\footnote{Los libros se pueden descargar en formato PDF,
+  respectivamente, de:
+  \begin{itemize}
+  \item \url{https://doc.lagout.org/operating\%20system\%20/linux/Learning\%20the\%20bash\%20Shell\%20-\%20Unix\%20Shell\%20Programming.pdf}
+  \item \url{http://index-of.es/Programming/Bash/O\%27Reilly\%20bash\%20CookBook.pdf}
+  \end{itemize}
+  }.
+
+\subsection{Sistemas de control de versiones}
+Los sistemas de control de versiones permiten gestionar los cambios que se realizan en ficheros (usualmente, código fuente de programas, documentos \LaTeX, etc.). Este tipo de sistemas está diseñado para almacenar los ficheros, mantener un histórico de las acciones realizadas sobre ellos y facilitar la colaboración de distintas personas en su edición. En la actualidad, el más utilizado es el sistema de control de versiones \href{https://git-scm.com/}{Git}. Los ficheros y los cambios realizados se pueden almacenar en distintos \textit{repositorios}, locales o remotos. Existen algunos sitios web para almacenar repositorios remotos, públicos o privados: \href{https://github.com}{Github}, \href{https://gitlab.com/}{Gitlab}, \href{https://bitbucket.org}{Bitbucket}...
+
+Como introducción y punto de entrada a Git se recomienda seguir alguno de los tutoriales disponibles en internet, por ejemplo \url{https://swcarpentry.github.io/git-novice/}. De nuevo, entre la abundante literatura sobre el tema, destacamos aquí una referencia de la que podemos descargar una versión en formato PDF\footnote{\url{https://gitlab.atica.um.es/palazon.um.es/gitParaTodos/blob/50ade3c49f78bd372e0237530c9abf27afb5dd0d/bib/O\%27Reilly\%20Git\%20Pocket\%20Guide\%202013.pdf}}.
+
+\subsection{Lenguaje de programación Python}
+\label{sec:python}
+
+
+Python es un un lenguaje de programación\ldots{}
+\begin{itemize}
+\item De alto nivel\footnote{``Cercano al lenguaje
+    natural'' (en este caso, al inglés), a diferencia de
+    ``lenguajes máquina''.}.
+\item De propósito general\footnote{En el sentido de estar orientado a
+    su uso para numerosos fines: desde programación de aplicaciones para
+    sistemas operativos hasta, juegos, proceso de audio, cálculo
+    científico, móviles\ldots{}}.
+\item Interpretado\footnote{Es decir, existe un programa (el
+    \emph{intérprete}) que lee y ejecuta los programas sin necesidad
+    de un proceso previo de compilación.}. Como tal, tiene sus ventajas
+  (se agiliza el ciclo de desarrollo de software) e inconvenientes
+  (menos rápido que los lenguajes compilados).
+\item Orientado al \emph{desarrollo rápido} y a la legibilidad de los programas.
+\item Cuenta con extensiones (bibliotecas) que lo convierten en una
+      potente herramienta en el \emph{cálculo numérico} y científico.
+    \item Muy \emph{popular} entre los desarrolladores de software, en
+      general. En la actualidad, ocupa la primera plaza en numerosas
+      clasificaciones\footnote{Basta echar un vistazo a \href{https://www.google.com/search?channel=fs&client=ubuntu&q=lenguajes+de+ordenador+m\%C3\%A1s+usados}{Google: lenguajes de ordenador más usados}}.
+    \item Disponible, con licencia libre, en las arquitecturas habituales \emph{Windows},
+  \emph{Mac}, \emph{Linux}.
+\end{itemize}
+
+Python abre un gran abanico de posibilidades para quienes estén
+en el cálculo numérico y científico. En este
+curso se presuponen conocimientos mínimos en este lenguaje, así como
+en editores (como \textit{Atom}, \textit{Spider}, o \textit{Emacs}),
+entornos de desarrollo (como \textit{Jupyter}) y bibliotecas
+matemáticas (\textit{numpy}, \textit{matplotlib}...)
+especializados. De nuevo, existe una numerosa bibliografía y recursos
+disponibles en internet.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "menuavedp.tex"
+%%% End:

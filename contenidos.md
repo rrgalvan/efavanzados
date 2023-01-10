@@ -4,10 +4,10 @@
 
 ### Sesión 0. 
 - Introducción. Métodos de Galerkin / Elementos Finitos
-### Sesión 1. 
+### Sesión 1. El lenguaje C/C++ en entornos Unix
 - Introducción a la "shell" Unix y sistemas de control de versiones. 
 - El lenguaje de programación C/C++. Programación orientada a objetos. 
-### Sesión 2. 
+### Sesión 2. Bibliotecas de Elementos finitos
 - Implementación de bibliotecas de elementos finitos
 - Bibliotecas de EF en lenguaje Julia: Gridap
 - Bibliotecas de EF en lenguaje Python/C++: FEniCS 
