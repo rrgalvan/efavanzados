@@ -1,17 +1,39 @@
-# Contenidos
+# Curso Métodos Numéricos Avanzados para EDP. Contenidos
 
 ## Semana 1
-1. Introducción a la "shell" en entornos Unix. Sistemas de control de versiones. Lenguaje de programación Python. Introducción al entorno de elementos finitos FEniCS.
-2. El lenguaje de programación C++. Programación orientada a objetos. Implementación de bibliotecas de elementos finitos.
+
+### Sesión 0. 
+- Introducción. Métodos de Galerkin / Elementos Finitos
+### Sesión 1. 
+- Introducción a la "shell" Unix y sistemas de control de versiones. 
+- El lenguaje de programación C/C++. Programación orientada a objetos. 
+### Sesión 2. 
+- Implementación de bibliotecas de elementos finitos
+- Bibliotecas de EF en lenguaje Julia: Gridap
+- Bibliotecas de EF en lenguaje Python/C++: FEniCS 
+
 ## Semana 2
-3. La biblioteca de elementos finitos C++ MFEM. Problemas de evolución. Sistemas de EDP.
-4. Elementos finitos de orden alto. Bases de Lobatto. Bases de Bernstein. Teoría e implementación en el ordenador.
-5. Elementos finitos de Hermite y elementos de clase C^1. Teoría e implementación en el ordenador.
+
+### Sesión 3. 
+- Métodos de Galekin discontinuos (DG) para EDP de orden uno (Advección-reacción, problemas de evolución)
+### Sesión 4. 
+- Métodos de Galekin discontinuos para EDP de orden dos (ecuaciones elípticas)
+### Sesión 5. 
+- Otras técnicas para resolución numérica de EDP hiperbólicas: corrección de flujo (FCT) 
+
 ## Semana 3
-6. Elementos discontinuos para EDP elípticas y parabólicas. Análisis e implementación en el ordenador.
-7. Elementos discontinuos para EDP hiperbólicas. Análisis e implementación en el ordenador.
-8. Otras técnicas para resolución numérica de EDP hiperbólicas: GLS, corrección de flujo. Teoría e implementación en el ordenador.
+
+### Sesión 6. 
+- Implementación en grandes ordenadores de métodos DG y FCT
+### Sesión 7. 
+- Introducción a las Redes Neuronales (NN). Bibliotecas en Julia y Python
+### Sesión 8. 
+- Implementación en grandes ordenadores de RN
+
 ## Semana 4
-9. Implementación en grandes ordenadores de métodos numéricos paralelos en espacio y tiempo.
-10. Resolución numérica de EDP para el bilaplaciano y EDP de orden cuatro. Teoría e implementación en el ordenador.
-11. Refinamiento de malla y h/p-adaptabilidad. Teoría e implementación en el ordenador.
+
+### Sesión 9. 
+- Introducción a las NN físicamente informadas (PINN). Bibliotecas en Julia y Python
+### Sesión 10. 
+- Implementación en grandes ordenadores de PINN
+

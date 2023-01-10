@@ -1,2 +1,2 @@
 # efavanzados
-Curso Elementos Finitos Avanzados
+Curso Métodos Numéricos Avanzados para EDP
